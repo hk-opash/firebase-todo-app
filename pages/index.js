@@ -76,7 +76,7 @@ export default function Home() {
 
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         data.push({ ...doc.data(), id: doc.id });
       });
 
@@ -144,42 +144,61 @@ export default function Home() {
                 </button>
               </div>
             </div>
+
+            {/* {console.log(
+              "todos",
+              todos.filter((obj) =>
+                console.log(
+                  "JSON.stringify(obj)",
+                  JSON.stringify(obj)
+                    .toLowerCase()
+                    .includes(todoInput.toString().toLowerCase())
+                )
+              )
+            )} */}
+
             <div className="my-10">
               {todos?.length > 0 &&
-                todos.map((todo, index) => (
-                  <div
-                    className="flex items-center justify-between mt-4"
-                    key={todo?.id}
-                  >
-                    <div className="flex items-center gap-3">
-                      <input
-                        id={`todo-${todo?.id}`}
-                        type="checkbox"
-                        className="w-4 h-4 accent-green-400 rounded-lg"
-                        checked={todo?.completed}
-                        onChange={(e) => markAsCompletedHandler(e, todo?.id)}
-                      />
-                      <label
-                        htmlFor={`todo-${todo?.id}`}
-                        className={`font-medium ${
-                          todo?.completed ? "line-through" : ""
-                        }`}
-                      >
-                        {todo?.content}
-                      </label>
-                    </div>
-
+                todos
+                  .filter((obj) =>
+                    JSON.stringify(obj)
+                      .toLowerCase()
+                      .includes(todoInput.toString().toLowerCase())
+                  )
+                  .map((todo, index) => (
                     <div
-                      className="flex items-center gap-3"
-                      onClick={() => deleteTodo(todo?.id)}
+                      className="flex items-center justify-between mt-4"
+                      key={todo?.id}
                     >
-                      <MdDeleteForever
-                        size={24}
-                        className="text-red-400 hover:text-red-600 cursor-pointer"
-                      />
+                      <div className="flex items-center gap-3">
+                        <input
+                          id={`todo-${todo?.id}`}
+                          type="checkbox"
+                          className="w-4 h-4 accent-green-400 rounded-lg"
+                          checked={todo?.completed}
+                          onChange={(e) => markAsCompletedHandler(e, todo?.id)}
+                        />
+                        <label
+                          htmlFor={`todo-${todo?.id}`}
+                          className={`font-medium ${
+                            todo?.completed ? "line-through" : ""
+                          }`}
+                        >
+                          {todo?.content}
+                        </label>
+                      </div>
+
+                      <div
+                        className="flex items-center gap-3"
+                        onClick={() => deleteTodo(todo?.id)}
+                      >
+                        <MdDeleteForever
+                          size={24}
+                          className="text-red-400 hover:text-red-600 cursor-pointer"
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
             </div>
           </div>
         </main>
